@@ -50,6 +50,14 @@ bool AP_OpenSC::update()
 
     int16_t numc = _port->available();
     uint8_t data;
+    // if no data available, return 0
+    if (numc == 0)
+    {
+        data = 0;
+        cx = 0;
+        cy = 0;
+    }
+    
     uint8_t receive_buf[numc];
     // uint8_t *receive_buf = new uint8_t[numc];
     uint8_t *ptr_cx = (uint8_t*)& cx; // 指向cx的指针
