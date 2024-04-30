@@ -89,6 +89,7 @@ const AP_Scheduler::Task Plane::scheduler_tasks[] = {
     SCHED_TASK_CLASS(AP_OpticalFlow, &plane.optflow, update,    50,    50,  87),
 #endif
     SCHED_TASK(one_second_loop,         1,    400,  90),
+    SCHED_TASK(update_OpenSC,           400,  100,  91),//2024
     SCHED_TASK(three_hz_loop,           3,     75,  93),
     SCHED_TASK(check_long_failsafe,     3,    400,  96),
     SCHED_TASK_CLASS(AP_RPM,           &plane.rpm_sensor,     update,     10, 100,  99),
@@ -340,7 +341,7 @@ void Plane::one_second_loop()
             // reset the landing altitude correction
             landing.alt_offset = 0;
     }
-
+    gcs().send_text(MAV_SEVERITY_CRITICAL," Dep: %.2f m  Temp: %.1f °C",opensc.cx,opensc.cy); //2024
     // this ensures G_Dt is correct, catching startup issues with constructors
     // calling the scheduler methods
     if (!is_equal(1.0f/scheduler.get_loop_rate_hz(), scheduler.get_loop_period_s()) ||
@@ -348,6 +349,16 @@ void Plane::one_second_loop()
         INTERNAL_ERROR(AP_InternalError::error_t::flow_of_control);
     }
 }
+
+
+//2024 
+void Plane::update_OpenSC(void)
+{
+    if(opensc.update()){
+         
+            }
+}
+
 
 void Plane::three_hz_loop()
 {

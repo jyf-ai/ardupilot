@@ -91,6 +91,8 @@ void Plane::init_ardupilot()
     gps.set_log_gps_bit(MASK_LOG_GPS);
     gps.init(serial_manager);
 
+    opensc.init(serial_manager);//2024
+
     init_rc_in();               // sets up rc channels from radio
 
 #if HAL_MOUNT_ENABLED

@@ -84,7 +84,7 @@
 #include <AP_Landing/AP_Landing.h>
 #include <AP_LandingGear/AP_LandingGear.h>     // Landing Gear library
 #include <AP_Follow/AP_Follow.h>
-
+#include<AP_OpenSC/AP_OpenSC.h> //2024
 #include "GCS_Mavlink.h"
 #include "GCS_Plane.h"
 #include "quadplane.h"
@@ -196,6 +196,7 @@ private:
 
     AP_RPM rpm_sensor;
 
+    AP_OpenSC opensc{}; //2024
     AP_TECS TECS_controller{ahrs, aparm, landing, MASK_LOG_TECS};
     AP_L1_Control L1_controller{ahrs, &TECS_controller};
 
@@ -990,6 +991,7 @@ private:
 
     // ArduPlane.cpp
     void disarm_if_autoland_complete();
+    void update_OpenSC(void); //2024
     void get_osd_roll_pitch_rad(float &roll, float &pitch) const override;
     float tecs_hgt_afe(void);
     void efi_update(void);
